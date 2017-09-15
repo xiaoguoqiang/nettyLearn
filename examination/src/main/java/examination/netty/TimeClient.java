@@ -24,7 +24,7 @@ public class TimeClient {
 						}
 					});
 			ChannelFuture f = b.connect(host, port).sync();
-			f.channel().close().sync();
+			f.channel().closeFuture().sync();
 			
 		} finally {
 			group.shutdownGracefully();

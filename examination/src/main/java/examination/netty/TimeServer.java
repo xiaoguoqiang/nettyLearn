@@ -21,6 +21,7 @@ public class TimeServer {
 					.childHandler(new ChildChannelHandler());
 			
 			ChannelFuture f = b.bind(port).sync();
+			
 			f.channel().closeFuture().sync();
 			
 
