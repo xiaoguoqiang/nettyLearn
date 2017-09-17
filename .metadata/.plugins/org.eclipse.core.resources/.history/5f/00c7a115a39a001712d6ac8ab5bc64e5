@@ -1,0 +1,5 @@
+package examination.netty.tcp.tearSticky;
+
+public class TimeServer {
+	
+}
