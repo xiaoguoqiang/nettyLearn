@@ -31,7 +31,6 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 		byte[] bytes = new byte[buf.readableBytes()];
 		buf.readBytes(bytes);
 		String time = new String(bytes,"UTF-8");
-		//打印时间
 		System.out.println("Now is : " + time);
 	}
 	

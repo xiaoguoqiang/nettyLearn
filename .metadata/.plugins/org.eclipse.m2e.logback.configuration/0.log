@@ -1126,3 +1126,7 @@ Caused by: org.eclipse.aether.transfer.ArtifactTransferException: Failure to tra
 2017-09-20 09:51:35,097 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\github\nettyLearn\examination\src\main\resources
 2017-09-20 09:51:35,098 [Worker-171] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
 2017-09-20 09:51:35,099 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\github\nettyLearn\examination\src\test\resources
+2017-09-20 19:59:33,350 [Worker-61] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-20 19:59:33,353 [Worker-61] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\github\nettyLearn\examination\src\main\resources
+2017-09-20 19:59:33,354 [Worker-61] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-20 19:59:33,355 [Worker-61] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\github\nettyLearn\examination\src\test\resources
