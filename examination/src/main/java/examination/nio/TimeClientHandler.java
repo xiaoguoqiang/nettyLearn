@@ -83,7 +83,7 @@ public class TimeClientHandler implements Runnable  {
 	}
 	
 	/**
-	 * 棣栧厛瀹㈡埛绔厛閾炬帴鏈嶅姟绔紝鑻ラ摼鎺ユ垚鍔熷垯娉ㄥ唽read锛岃嫢澶辫触鍒欑户缁敞鍐宑onnect
+	 * selector中注册read或者connect
 	 * 
 	 * **/
 	private void doConnect() throws IOException{
@@ -96,7 +96,7 @@ public class TimeClientHandler implements Runnable  {
 	}
 	
 	/**
-	 * 澶勭悊澶氳矾澶嶇敤鍣ㄧ殑
+	 * 处理就绪的channel
 	 * **/
 	private void handleInput(SelectionKey key) throws IOException{
 		if(key.isValid()){
@@ -132,7 +132,7 @@ public class TimeClientHandler implements Runnable  {
 	}
 	
 	/**
-	 * 鍚戞湇鍔＄鍙戦�佹煡璇㈡椂闂寸殑鎸囦护
+	 * 发送信息
 	 * */
 	private void doWrite(SocketChannel sc) throws IOException{
 		byte[] bytes = "QUERY TIME ORDER".getBytes();
@@ -145,7 +145,4 @@ public class TimeClientHandler implements Runnable  {
 		}
 	}
 	
-	
-	
-
 }

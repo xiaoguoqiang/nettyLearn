@@ -12,7 +12,7 @@ import java.util.Set;
 
 
 /**
- * 澶嶇敤鍣ㄦ椂闂存湇鍔″櫒
+ * 多路复用器
  * 
  * 
  * **/
@@ -30,18 +30,18 @@ public class MultiplexerTimeServer implements Runnable {
 			
 			selector = Selector.open();
 			servChannel = ServerSocketChannel.open();
-			//璁剧疆闃诲妯″紡
+			//设置为非阻塞
 			servChannel.configureBlocking(false);
-			//璁剧疆缁戝畾IP銆佺鍙ｏ紝骞惰缃敹鍙戞秷鎭椂鏁版嵁鐨勬渶澶у��
+			//绑定本地ip和对应端口
 			servChannel.socket().bind(new InetSocketAddress(port), 1024);
-			//鏈嶅姟绔痗hannel娉ㄥ唽鍒皊elector锛屽苟鐩戝惉accept浜嬩欢
+			//向selector注册channel，并监听accept事件
 			servChannel.register(selector, SelectionKey.OP_ACCEPT);
 			
 			System.out.println("The time server is start in port :" + port);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			//鍒濆鍖栧け璐ワ紝绯荤粺鎺ㄥ嚭
+			//异常，则程序退出
 			System.exit(1);
 		}
 		
@@ -57,7 +57,7 @@ public class MultiplexerTimeServer implements Runnable {
 			try {
 				
 				selector.select(1000);
-				//selector涓彇鍑�
+				//selector获取就绪状态的channel集合
 				Set<SelectionKey> selectedKey = selector.selectedKeys();
 				Iterator<SelectionKey> it = selectedKey.iterator();
 				
@@ -84,7 +84,7 @@ public class MultiplexerTimeServer implements Runnable {
 			
 		if(selector != null){
 			try{
-				//selector 鍏抽棴鏃朵細鑷姩鍏抽棴鎺夊叾涓婄殑channel鍜宲ipe
+				//selector 关闭时会自动释放注册在其上的资源（channel、pipe）
 				selector.close();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -93,28 +93,28 @@ public class MultiplexerTimeServer implements Runnable {
 	}
 	
 	/**
-	 * selector鐩戝惉鍒颁簨浠跺悗鐨勪簨浠跺鐞嗙▼搴�
+	 * 处理就绪状态的channel
 	 * @throws IOException 
 	 * 
 	 * **/
 	private void handleInput(SelectionKey key) throws IOException{
 		if(key.isValid()){
-			//鑻ユ槸閾炬帴璇锋眰
+			//accept事件处理
 			if(key.isAcceptable()){
-				//瀹屾垚涓夋鎻℃墜
+				//三次握手
 				SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
-				//閰嶇疆闃诲妯″紡
+				//设置为非阻塞
 				sc.configureBlocking(false);
-				//閾炬帴鎴愬姛鍚庯紝鐩戝惉read浜嬩欢
+				//selector中注册Read
 				sc.register(selector, SelectionKey.OP_READ);
 			}
 			if(key.isReadable()){
 				SocketChannel sc = (SocketChannel)key.channel();
-				//鍒濆鍖朾uffer
+				//初始化buffer
 				ByteBuffer buffer = ByteBuffer.allocate(1024);
 				int read = sc.read(buffer);
 				if( read > 0){
-					//璋冩暣buffer鐨刾osition鍜宭imit鐢ㄤ簬璇诲彇buffer
+					//将buffer的limit和position交换位置
 					buffer.flip();
 					byte[] bytes = new byte[buffer.remaining()];
 					buffer.get(bytes);
@@ -128,11 +128,11 @@ public class MultiplexerTimeServer implements Runnable {
 					doWriter(sc,returnMessage);
 				}
 				else if (read < 0){
-					//閾捐矾鍏抽棴
+					//对端链路关闭
 					key.cancel();
 					sc.close();
 				}else{
-					//0 鍒欏拷鐣�
+					//0 不做处理
 				}
 				
 			}
@@ -140,7 +140,7 @@ public class MultiplexerTimeServer implements Runnable {
 	}
 	
 	/**
-	 * socket鍙戦�佹秷鎭�
+	 * socket发送信息
 	 * **/
 	private void doWriter(SocketChannel sc, String message) throws IOException{
 		if(message != null && message.trim().length() > 0){
