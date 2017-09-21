@@ -1,7 +1,0 @@
-package examination.netty;
-
-import io.netty.channel.ChannelInboundHandlerAdapter;
-
-public class TimeClientHandler extends ChannelInboundHandlerAdapter {
-	
-}

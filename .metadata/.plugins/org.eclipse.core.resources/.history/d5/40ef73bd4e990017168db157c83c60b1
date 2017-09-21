@@ -1,5 +1,0 @@
-package examination.netty;
-
-public class TimeServerHandler extends ChannelInboundHandlerAdapter  {
-
-}
