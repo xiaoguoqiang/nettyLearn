@@ -1,0 +1,10 @@
+package netty;
+
+option java_package = "examination.netty.tcp.protobuf";
+option java_outer_classname = "SubscribeRespProto";
+
+message SubscribeResp{
+	required int32 subReqId = 1;
+	required int32 respCode = 2;
+	required string desc = 3;
+}
