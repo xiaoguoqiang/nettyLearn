@@ -33,11 +33,6 @@ import io.netty.util.CharsetUtil;
 
 public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-	private String url;
-
-	public HttpFileServerHandler(String url) {
-		this.url = url;
-	}
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
@@ -50,8 +45,8 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 			return;
 		}
 		final String uri = msg.uri();
-		String path = uri.substring(1);
-//		final String path = sanitizeUri(uri);
+//		String path = uri.substring(1);
+		final String path = sanitizeUri(uri);
 		if (path == null) {
 			sendError(ctx, HttpResponseStatus.FORBIDDEN);
 			return;
@@ -135,7 +130,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 				throw new Error();
 			}
 		}
-		if (!uri.startsWith(url)) {
+		if (!uri.startsWith("")) {
 			return null;
 		}
 		if (!uri.startsWith("/")) {

@@ -14,8 +14,6 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 public class HttpFileServer {
 
-	private final static String DEAFAULT_URL = "D:\\test";
-
 	public void initServer(String ip, Integer port, String url) {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workGroup = new NioEventLoopGroup();
@@ -31,7 +29,7 @@ public class HttpFileServer {
 									.addLast("http-aggregator", new HttpObjectAggregator(65535))
 									.addLast("http-encoder", new HttpResponseEncoder())
 									.addLast("http-chunked", new ChunkedWriteHandler())
-									.addLast("fileserverhandler", new HttpFileServerHandler(url));
+									.addLast("fileserverhandler", new HttpFileServerHandler());
 						}
 
 					});
@@ -50,7 +48,7 @@ public class HttpFileServer {
 	}
 
 	public static void main(String[] args) {
-		String url = DEAFAULT_URL;
+		String url = "";
 		if (args.length > 0) {
 			url = args[0];
 		}
