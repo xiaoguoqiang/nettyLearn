@@ -17,10 +17,12 @@ public class HttpXmlResponseDecoder extends AbstractHttpXmlDecoder<DefaultFullHt
 		super(clazz,isPrint);
 	}
 	
+	@Override
 	protected void decode(ChannelHandlerContext ctx,DefaultFullHttpResponse msg, List<Object> out) throws JiBXException {
 		HttpXmlResponse response = new HttpXmlResponse(msg,decoder0(ctx,msg.content()));
 		out.add(response);
 	}
+
 	
 	
 }

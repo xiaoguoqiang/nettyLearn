@@ -1,10 +1,8 @@
 package examination.netty.httpAndXml;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 
-import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.JiBXException;
 
 import io.netty.buffer.ByteBuf;

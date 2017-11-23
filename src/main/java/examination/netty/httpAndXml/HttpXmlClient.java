@@ -1,6 +1,5 @@
 package examination.netty.httpAndXml;
 
-import java.net.InetSocketAddress;
 
 import examination.netty.httpAndXml.pojo.Order;
 import io.netty.bootstrap.Bootstrap;
@@ -26,9 +25,9 @@ public class HttpXmlClient {
 
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {
-							ch.pipeline().addLast(new HttpResponseDecoder())
+							ch.pipeline().addLast("httpdecoder",new HttpResponseDecoder())
 							   		.addLast(new HttpObjectAggregator(65535))
-									.addLast(new HttpXmlResponseDecoder(Order.class, true))
+									.addLast("xmldecoder",new HttpXmlResponseDecoder(Order.class, true))
 									.addLast(new HttpRequestEncoder())
 									.addLast(new HttpXmlRequestEncoder())
 									.addLast(new HttpXmlClientHandler());
@@ -36,7 +35,7 @@ public class HttpXmlClient {
 
 					});
 
-			ChannelFuture cf = boot.bind(new InetSocketAddress(port)).sync();
+			ChannelFuture cf = boot.connect("192.168.137.88",9527).sync();
 			cf.channel().closeFuture().sync();
 
 		} finally {
