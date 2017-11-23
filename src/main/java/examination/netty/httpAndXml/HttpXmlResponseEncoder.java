@@ -1,9 +1,11 @@
 package examination.netty.httpAndXml;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
 import org.jibx.runtime.IBindingFactory;
+import org.jibx.runtime.JiBXException;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,9 +16,9 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.HttpVersion;
 
-public class HttpXmlResponseEncoder extends AbstracHttpXmlEncoder<HttpXmlResponse> {
+public class HttpXmlResponseEncoder extends AbstractHttpXmlEncoder<HttpXmlResponse> {
 
-	protected void encode(ChannelHandlerContext ctx, HttpXmlResponse msg, List<Object> out) {
+	protected void encode(ChannelHandlerContext ctx, HttpXmlResponse msg, List<Object> out) throws JiBXException, IOException {
 		ByteBuf body = encode0(ctx, msg.getBody());
 		FullHttpResponse response = msg.getHttpResponse();
 		if (response == null) {

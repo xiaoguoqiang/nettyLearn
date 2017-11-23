@@ -2,6 +2,8 @@ package examination.netty.httpAndXml;
 
 import java.util.List;
 
+import org.jibx.runtime.JiBXException;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 
@@ -15,8 +17,8 @@ public class HttpXmlResponseDecoder extends AbstractHttpXmlDecoder<DefaultFullHt
 		super(clazz,isPrint);
 	}
 	
-	protected void decode(ChannelHandlerContext ctx,DefaultFullHttpResponse msg, List<Object> out) {
-		HttpXmlResponse response = new HttpXmlResponse(msg,decode0(ctx,msg.content()));
+	protected void decode(ChannelHandlerContext ctx,DefaultFullHttpResponse msg, List<Object> out) throws JiBXException {
+		HttpXmlResponse response = new HttpXmlResponse(msg,decoder0(ctx,msg.content()));
 		out.add(response);
 	}
 	

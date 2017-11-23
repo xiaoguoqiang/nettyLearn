@@ -26,10 +26,11 @@ public class HttpXmlClient {
 
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {
-							ch.pipeline().addLast(new HttpResponseDecoder()).addLast(new HttpObjectAggregator(65535))
-									// .addLast(new HttpXmlResponseDecoder(Order.class,true))
+							ch.pipeline().addLast(new HttpResponseDecoder())
+							   		.addLast(new HttpObjectAggregator(65535))
+									.addLast(new HttpXmlResponseDecoder(Order.class, true))
 									.addLast(new HttpRequestEncoder())
-									.addLast(new HttpXmlRequestEncode(Order.class, true))
+									.addLast(new HttpXmlRequestEncoder())
 									.addLast(new HttpXmlClientHandler());
 						}
 
