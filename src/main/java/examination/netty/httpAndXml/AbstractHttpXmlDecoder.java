@@ -19,7 +19,7 @@ public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<
 	private Class<?> clazz = null;
 	private boolean isPrint;
 	
-	private final static String CHARSET_NAME="utf-8";
+	private final static String CHARSET_NAME="UTF-8";
 	private final static Charset UTF_8 = Charset.forName(CHARSET_NAME);
 	
 	
