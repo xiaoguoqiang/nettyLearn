@@ -34,7 +34,7 @@ public class HttpXmlServer {
 						}
 
 					});
-			ChannelFuture cf = bs.bind("192.168.137.88",9527).sync();
+			ChannelFuture cf = bs.bind("localhost",9527).sync();
 			System.out.println("The Server start in " + port);
 			cf.channel().closeFuture().sync();
 			

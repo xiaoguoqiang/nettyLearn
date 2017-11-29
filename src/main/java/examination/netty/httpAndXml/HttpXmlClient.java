@@ -35,7 +35,7 @@ public class HttpXmlClient {
 
 					});
 
-			ChannelFuture cf = boot.connect("192.168.137.88",9527).sync();
+			ChannelFuture cf = boot.connect("localhost",9527).sync();
 			cf.channel().closeFuture().sync();
 
 		} finally {
