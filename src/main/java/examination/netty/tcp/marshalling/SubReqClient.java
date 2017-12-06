@@ -1,5 +1,6 @@
 package examination.netty.tcp.marshalling;
 
+import examination.common.MarshallingCodeCFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

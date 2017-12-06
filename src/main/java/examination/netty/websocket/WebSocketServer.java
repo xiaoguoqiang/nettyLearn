@@ -28,7 +28,7 @@ public class WebSocketServer {
 							ch.pipeline().addLast(new HttpServerCodec()).addLast(new HttpObjectAggregator(65535))
 									.addLast(new ChunkedWriteHandler()).addLast(new WebSocketServerHandler());
 
-						}
+						}	
 
 					});
 
