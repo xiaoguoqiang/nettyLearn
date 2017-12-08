@@ -3,11 +3,9 @@ package examination.common;
 
 import java.io.IOException;
 
-import org.jboss.marshalling.Marshaller;
 import org.jboss.marshalling.MarshallerFactory;
 import org.jboss.marshalling.Marshalling;
 import org.jboss.marshalling.MarshallingConfiguration;
-import org.jboss.marshalling.Unmarshaller;
 
 import io.netty.handler.codec.marshalling.DefaultMarshallerProvider;
 import io.netty.handler.codec.marshalling.DefaultUnmarshallerProvider;
@@ -39,18 +37,18 @@ public class MarshallingCodeCFactory {
 		return encoder;
 	}
 	
-	public static Marshaller buildMarshaller() throws IOException {
+	public static MarshallerProvider buildMarshallerProvider() throws IOException {
 		final MarshallerFactory marshallerFactory = Marshalling.getProvidedMarshallerFactory("serial");
 		final MarshallingConfiguration configuration = new MarshallingConfiguration();
 		configuration.setVersion(5);
-		return marshallerFactory.createMarshaller(configuration);
+		return new DefaultMarshallerProvider(marshallerFactory,configuration);
 	}
 	
-	public static Unmarshaller buildUnmarshaller() throws IOException {
+	public static UnmarshallerProvider buildUnmarshallerProvider() throws IOException {
 		final MarshallerFactory marshallerFactory = Marshalling.getProvidedMarshallerFactory("serial");
 		final MarshallingConfiguration configuration = new MarshallingConfiguration();
 		configuration.setVersion(5);
-		return marshallerFactory.createUnmarshaller(configuration);
+		return new DefaultUnmarshallerProvider(marshallerFactory,configuration);
 	}
 	
 }

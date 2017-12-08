@@ -36,7 +36,7 @@ public class NettyClient {
 
 					});
 
-			ChannelFuture future = b.connect(new InetSocketAddress(ip, port)).sync();
+			ChannelFuture future = b.connect(new InetSocketAddress(ip, port),new InetSocketAddress("127.0.0.1",9528)).sync();
 			future.channel().closeFuture().sync();
 
 		} finally {

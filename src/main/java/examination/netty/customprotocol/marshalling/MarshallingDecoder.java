@@ -7,15 +7,18 @@ import org.jboss.marshalling.Unmarshaller;
 
 import examination.common.MarshallingCodeCFactory;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.marshalling.UnmarshallerProvider;
 
 public class MarshallingDecoder {
-	private final Unmarshaller unmarshaller;
+	private final UnmarshallerProvider unmarshallerProvider;
 
 	public MarshallingDecoder() throws IOException {
-		unmarshaller = MarshallingCodeCFactory.buildUnmarshaller();
+		unmarshallerProvider = MarshallingCodeCFactory.buildUnmarshallerProvider();
 	}
 
-	public Object decode(ByteBuf in) throws IOException, ClassNotFoundException {
+	public Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+		Unmarshaller unmarshaller = unmarshallerProvider.getUnmarshaller(ctx);
 		int objectSize = in.readInt();
 		ByteBuf buf = in.slice(in.readerIndex(), objectSize);
 		ByteInput input = new ChannelBufferByteInput(buf);

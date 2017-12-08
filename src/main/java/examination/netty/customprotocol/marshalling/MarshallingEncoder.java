@@ -6,19 +6,22 @@ import org.jboss.marshalling.Marshaller;
 
 import examination.common.MarshallingCodeCFactory;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.marshalling.MarshallerProvider;
 
 public class MarshallingEncoder {
 	
 	private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
 	
-	Marshaller marshaller;
+	MarshallerProvider marshallerProvider;
 	
 	public MarshallingEncoder() throws IOException {
-		marshaller = MarshallingCodeCFactory.buildMarshaller();
+		marshallerProvider = MarshallingCodeCFactory.buildMarshallerProvider();
 	}
 	
-	public void encode(Object msg, ByteBuf buf) throws IOException {
+	public void encode(ChannelHandlerContext ctx, Object msg, ByteBuf buf) throws Exception {
 		try {
+			Marshaller marshaller = marshallerProvider.getMarshaller(ctx);
 			int lengthPos = buf.writerIndex();
 			buf.writeBytes(LENGTH_PLACEHOLDER);
 			ChannelBufferByteOutput output = new ChannelBufferByteOutput(buf);
@@ -27,10 +30,9 @@ public class MarshallingEncoder {
 			marshaller.finish();
 			buf.setIndex(lengthPos, buf.writerIndex() - lengthPos -4);
 			
-		}finally {
-			marshaller.close();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-		
 	}
 	
 	

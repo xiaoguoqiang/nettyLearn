@@ -41,14 +41,14 @@ public class NettyMessageEncoder extends MessageToMessageEncoder<NettyMessage>{
 			sendBuf.writeInt(keyArray.length);
 			sendBuf.writeBytes(keyArray);
 			value = param.getValue();
-			marshallingEncoder.encode(value, sendBuf);
+			marshallingEncoder.encode(ctx, value, sendBuf);
 		}
 		
 		key = null;
 		keyArray = null;
 		value = null;
 		if(msg.getBody() != null) {
-			marshallingEncoder.encode(msg.getBody(), sendBuf);
+			marshallingEncoder.encode(ctx, msg.getBody(), sendBuf);
 		}else {
 			sendBuf.writeInt(0);
 			sendBuf.setInt(4 , sendBuf.readableBytes());
