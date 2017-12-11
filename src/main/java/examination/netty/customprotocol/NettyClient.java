@@ -19,9 +19,9 @@ public class NettyClient {
 
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
-	private EventLoopGroup group = new NioEventLoopGroup();
+	EventLoopGroup group = new NioEventLoopGroup();
 
-	private void connect(String ip, int port) throws InterruptedException {
+	public void connect(String ip, int port) {
 		try {
 			Bootstrap b = new Bootstrap();
 			b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
@@ -37,9 +37,13 @@ public class NettyClient {
 					});
 
 			ChannelFuture future = b.connect(new InetSocketAddress(ip, port),new InetSocketAddress("127.0.0.1",9528)).sync();
+
 			future.channel().closeFuture().sync();
 
-		} finally {
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
 			executor.execute(() -> {
 				try {
 					TimeUnit.SECONDS.sleep(5);
