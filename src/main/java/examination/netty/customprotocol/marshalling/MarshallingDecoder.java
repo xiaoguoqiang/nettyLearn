@@ -12,9 +12,11 @@ import io.netty.handler.codec.marshalling.UnmarshallerProvider;
 
 public class MarshallingDecoder {
 	private final UnmarshallerProvider unmarshallerProvider;
+//	Unmarshaller unmarshaller;
 
 	public MarshallingDecoder() throws IOException {
 		unmarshallerProvider = MarshallingCodeCFactory.buildUnmarshallerProvider();
+//		unmarshaller = MarshallingCodeCFactory.buildUnMarshalling();
 	}
 
 	public Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {

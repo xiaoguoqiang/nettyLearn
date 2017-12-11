@@ -44,18 +44,18 @@ public class NettyClient {
 			e.printStackTrace();
 		}
 		finally {
-			executor.execute(() -> {
-				try {
-					TimeUnit.SECONDS.sleep(5);
-					try {
-						connect("127.0.0.1", 9527);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			});
+//			executor.execute(() -> {
+//				try {
+//					TimeUnit.SECONDS.sleep(5);
+//					try {
+//						connect("127.0.0.1", 9527);
+//					} catch (Exception e1) {
+//						e1.printStackTrace();
+//					}
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			});
 
 		}
 

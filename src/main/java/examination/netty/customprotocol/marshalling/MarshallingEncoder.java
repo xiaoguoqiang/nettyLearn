@@ -14,9 +14,11 @@ public class MarshallingEncoder {
 	private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
 	
 	MarshallerProvider marshallerProvider;
+//	Marshaller marshaller;
 	
 	public MarshallingEncoder() throws IOException {
 		marshallerProvider = MarshallingCodeCFactory.buildMarshallerProvider();
+//		marshaller = MarshallingCodeCFactory.buildMarshalling();
 	}
 	
 	public void encode(ChannelHandlerContext ctx, Object msg, ByteBuf buf) throws Exception {

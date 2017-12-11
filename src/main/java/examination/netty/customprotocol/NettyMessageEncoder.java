@@ -1,16 +1,14 @@
 package examination.netty.customprotocol;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import examination.netty.customprotocol.marshalling.MarshallingEncoder;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty.handler.codec.MessageToByteEncoder;
 
-public class NettyMessageEncoder extends MessageToMessageEncoder<NettyMessage>{
+public class NettyMessageEncoder extends MessageToByteEncoder<NettyMessage>{ //此处父类为 MessageToByteEncoder   
 	
 	MarshallingEncoder marshallingEncoder;
 	
@@ -20,11 +18,10 @@ public class NettyMessageEncoder extends MessageToMessageEncoder<NettyMessage>{
 	
 
 	@Override
-	protected void encode(ChannelHandlerContext ctx, NettyMessage msg, List<Object> out) throws Exception {
+	protected void encode(ChannelHandlerContext ctx, NettyMessage msg, ByteBuf sendBuf)throws Exception {
 		if(msg == null || msg.getHeader() == null) {
 				throw new Exception("The code message is null");
 		}
-		ByteBuf sendBuf = Unpooled.buffer();
 		sendBuf.writeInt(msg.getHeader().getCrcCode());
 		sendBuf.writeInt(msg.getHeader().getLength());
 		sendBuf.writeLong(msg.getHeader().getSessionID());
@@ -51,8 +48,7 @@ public class NettyMessageEncoder extends MessageToMessageEncoder<NettyMessage>{
 			marshallingEncoder.encode(ctx, msg.getBody(), sendBuf);
 		}else {
 			sendBuf.writeInt(0);
-			sendBuf.setInt(4 , sendBuf.readableBytes());
+			sendBuf.setInt(4 , sendBuf.readableBytes()-8);  //此处长度设置为长度字段之后的长度
 		}
 	}
-
 }

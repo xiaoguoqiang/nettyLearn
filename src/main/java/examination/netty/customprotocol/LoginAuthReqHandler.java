@@ -14,7 +14,7 @@ public class LoginAuthReqHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx,Object msg) {
 		NettyMessage message = (NettyMessage)msg;
 		if(message.getHeader() != null && message.getHeader().getType() == MessageType.LOGIN_RSP.getValue()) {
-			byte logResult = (byte)message.getBody();
+			Byte logResult = (Byte)message.getBody();
 			if(logResult != (byte)0) {
 				ctx.close();
 			}else {
